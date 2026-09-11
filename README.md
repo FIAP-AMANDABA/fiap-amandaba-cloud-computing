@@ -124,10 +124,10 @@ requisição com a URL e o corpo (`body`) indicados em cada passo e executar. As
 extenso, usando a aplicação publicada:
 
 ```text
-https://webapp-amandaba-rm566385.azurewebsites.net
+https://webapp-amandaba-<RM_AZURE>.azurewebsites.net
 ```
 
-Se o seu `RM_AZURE` for diferente do exemplo, ajuste esse trecho da URL em todos os passos. O roteiro
+Substitua `<RM_AZURE>` pelo seu RM em todos os passos abaixo. O roteiro
 cobre o par de tabelas relacionadas usado na avaliação do CRUD — **Pets ↔ Consultas** — com pelo menos
 2 registros significativos em cada uma, além das quatro operações (inserir, alterar, excluir, consultar)
 exigidas pelo enunciado.
@@ -137,11 +137,11 @@ exigidas pelo enunciado.
 > (ex.: Cachorro, Gato). Substitua `{idTutor}` pelo valor real nos exemplos abaixo.
 
 ### Passo 1 — Listar espécies
-`GET https://webapp-amandaba-rm566385.azurewebsites.net/api/especies`
+`GET https://webapp-amandaba-<RM_AZURE>.azurewebsites.net/api/especies`
 Sem corpo. Execute e anote o `id` de "Cachorro" e de "Gato" (ou as espécies disponíveis no seu banco).
 
 ### Passo 2 — Cadastrar 2 pets
-`POST https://webapp-amandaba-rm566385.azurewebsites.net/api/tutores/{idTutor}/pets`
+`POST https://webapp-amandaba-<RM_AZURE>.azurewebsites.net/api/tutores/{idTutor}/pets`
 
 **Pet 1 — Thor (cachorro):**
 ```json
@@ -177,12 +177,12 @@ Execute os dois `POST` e anote o `petId` retornado em cada resposta (201) — vo
 próximos passos.
 
 ### Passo 3 — Consultar pets cadastrados
-`GET https://webapp-amandaba-rm566385.azurewebsites.net/api/pets/{petId}`
+`GET https://webapp-amandaba-<RM_AZURE>.azurewebsites.net/api/pets/{petId}`
 Sem corpo. Chame uma vez para o `petId` do Thor e uma vez para o `petId` da Luna, para evidenciar o
 "Consultar" (SELECT) do pet recém-criado.
 
 ### Passo 4 — Cadastrar 2 consultas
-`POST https://webapp-amandaba-rm566385.azurewebsites.net/api/pets/{petId}/consultas`
+`POST https://webapp-amandaba-<RM_AZURE>.azurewebsites.net/api/pets/{petId}/consultas`
 
 **Consulta do Thor (check-up de rotina):**
 ```json
@@ -226,7 +226,7 @@ Use o `petId` do Thor para a primeira e o `petId` da Luna para a segunda. Anote 
 retornado em cada resposta (201).
 
 ### Passo 5 — Alterar (UPDATE) uma consulta
-`PUT https://webapp-amandaba-rm566385.azurewebsites.net/api/pets/{petId}/consultas/{consultaId}`
+`PUT https://webapp-amandaba-<RM_AZURE>.azurewebsites.net/api/pets/{petId}/consultas/{consultaId}`
 Use o `petId` e `consultaId` da consulta do Thor:
 ```json
 {
@@ -249,7 +249,7 @@ Use o `petId` e `consultaId` da consulta do Thor:
 registro já existente.)
 
 ### Passo 6 — Alterar apenas o status
-`PATCH https://webapp-amandaba-rm566385.azurewebsites.net/api/pets/{petId}/consultas/{consultaId}/status`
+`PATCH https://webapp-amandaba-<RM_AZURE>.azurewebsites.net/api/pets/{petId}/consultas/{consultaId}/status`
 Use o `petId` e `consultaId` da consulta da Luna:
 ```json
 {
@@ -258,20 +258,20 @@ Use o `petId` e `consultaId` da consulta da Luna:
 ```
 
 ### Passo 7 — Consultar novamente para evidenciar as alterações
-- `GET https://webapp-amandaba-rm566385.azurewebsites.net/api/pets/{petId}/consultas/{consultaId}`
+- `GET https://webapp-amandaba-<RM_AZURE>.azurewebsites.net/api/pets/{petId}/consultas/{consultaId}`
   para a consulta do Thor → mostra o novo peso/horário.
-- `GET https://webapp-amandaba-rm566385.azurewebsites.net/api/pets/{petId}/consultas?status=REALIZADA`
+- `GET https://webapp-amandaba-<RM_AZURE>.azurewebsites.net/api/pets/{petId}/consultas?status=REALIZADA`
   para a Luna → mostra a consulta filtrada pelo novo status.
 
 ### Passo 8 — Excluir (DELETE) um registro
-`DELETE https://webapp-amandaba-rm566385.azurewebsites.net/api/pets/{petId}/consultas/{consultaId}`
+`DELETE https://webapp-amandaba-<RM_AZURE>.azurewebsites.net/api/pets/{petId}/consultas/{consultaId}`
 — use o `petId` e `consultaId` da consulta da Luna (a que você acabou de marcar como `REALIZADA`), para
 fechar o ciclo completo de CRUD sobre a tabela de Consultas. Em seguida, chame
-`GET https://webapp-amandaba-rm566385.azurewebsites.net/api/pets/{petId}/consultas` novamente para
+`GET https://webapp-amandaba-<RM_AZURE>.azurewebsites.net/api/pets/{petId}/consultas` novamente para
 mostrar que o registro não aparece mais na listagem.
 
 ### Passo 9 (opcional, se quiser reforçar o relacionamento) — Histórico de peso
-`POST https://webapp-amandaba-rm566385.azurewebsites.net/api/pets/{petId}/pesos`
+`POST https://webapp-amandaba-<RM_AZURE>.azurewebsites.net/api/pets/{petId}/pesos`
 Como reforço opcional do relacionamento Pets ↔ outra tabela, dá pra registrar peso para o Thor:
 ```json
 {
@@ -280,10 +280,9 @@ Como reforço opcional do relacionamento Pets ↔ outra tabela, dá pra registra
 }
 ```
 e depois consultar com
-`GET https://webapp-amandaba-rm566385.azurewebsites.net/api/pets/{petId}/pesos/atual`.
+`GET https://webapp-amandaba-<RM_AZURE>.azurewebsites.net/api/pets/{petId}/pesos/atual`.
 
 ---
-
 ## 11. Arquitetura
 
 ```text
@@ -305,3 +304,4 @@ Aplicativo (App Service)".
 
 - Repositório de código (C# / .NET): https://github.com/FIAP-AMANDABA/fiap-amandaba-dotnet
 - Repositório de Cloud Computing (este): https://github.com/FIAP-AMANDABA/fiap-amandaba-cloud-computing
+- Vídeo demonstrativo (YouTube): https://youtu.be/ujIjjSQHFRA
