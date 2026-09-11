@@ -117,22 +117,31 @@ Com o deploy concluído, a documentação interativa da API fica disponível em:
 https://webapp-amandaba-<RM_AZURE>.azurewebsites.net/swagger
 ```
 
-## 10. Roteiro de testes no Swagger (dados prontos para copiar e colar)
+## 10. Roteiro de testes (dados prontos para copiar e colar)
 
-Esta seção existe para agilizar a gravação do vídeo: é só abrir o `/swagger`, clicar em **"Try it out"**
-em cada endpoint, colar o corpo (`body`) correspondente e executar (`Execute`). O roteiro cobre o par
-de tabelas relacionadas usado na avaliação do CRUD — **Pets ↔ Consultas** — com pelo menos 2 registros
-significativos em cada uma, além das quatro operações (inserir, alterar, excluir, consultar) exigidas
-pelo enunciado.
+Esta seção existe para agilizar a gravação do vídeo: é só abrir o Postman (ou o `/swagger`), criar a
+requisição com a URL e o corpo (`body`) indicados em cada passo e executar. As URLs abaixo já estão por
+extenso, usando a aplicação publicada:
+
+```text
+https://webapp-amandaba-rm566385.azurewebsites.net
+```
+
+Se o seu `RM_AZURE` for diferente do exemplo, ajuste esse trecho da URL em todos os passos. O roteiro
+cobre o par de tabelas relacionadas usado na avaliação do CRUD — **Pets ↔ Consultas** — com pelo menos
+2 registros significativos em cada uma, além das quatro operações (inserir, alterar, excluir, consultar)
+exigidas pelo enunciado.
 
 > **Antes de começar:** você precisa de um `idTutor` válido (já existente no banco) e de um `idEspecie`
-> válido. Se não souber os valores, rode primeiro `GET /api/especies` e anote o `id` da espécie que vai
-> usar (ex.: Cachorro, Gato). Substitua `{idTutor}` pelos valores reais nos exemplos abaixo.
+> válido. Se não souber os valores, rode primeiro o Passo 1 e anote o `id` da espécie que vai usar
+> (ex.: Cachorro, Gato). Substitua `{idTutor}` pelo valor real nos exemplos abaixo.
 
-### Passo 1 — `GET /api/especies`
+### Passo 1 — Listar espécies
+`GET https://webapp-amandaba-rm566385.azurewebsites.net/api/especies`
 Sem corpo. Execute e anote o `id` de "Cachorro" e de "Gato" (ou as espécies disponíveis no seu banco).
 
-### Passo 2 — Cadastrar 2 pets (`POST /api/tutores/{idTutor}/pets`)
+### Passo 2 — Cadastrar 2 pets
+`POST https://webapp-amandaba-rm566385.azurewebsites.net/api/tutores/{idTutor}/pets`
 
 **Pet 1 — Thor (cachorro):**
 ```json
@@ -167,11 +176,13 @@ Sem corpo. Execute e anote o `id` de "Cachorro" e de "Gato" (ou as espécies dis
 Execute os dois `POST` e anote o `petId` retornado em cada resposta (201) — você vai usá-los nos
 próximos passos.
 
-### Passo 3 — Consultar pets cadastrados (`GET /api/pets/{petId}`)
+### Passo 3 — Consultar pets cadastrados
+`GET https://webapp-amandaba-rm566385.azurewebsites.net/api/pets/{petId}`
 Sem corpo. Chame uma vez para o `petId` do Thor e uma vez para o `petId` da Luna, para evidenciar o
 "Consultar" (SELECT) do pet recém-criado.
 
-### Passo 4 — Cadastrar 2 consultas (`POST /api/pets/{petId}/consultas`)
+### Passo 4 — Cadastrar 2 consultas
+`POST https://webapp-amandaba-rm566385.azurewebsites.net/api/pets/{petId}/consultas`
 
 **Consulta do Thor (check-up de rotina):**
 ```json
@@ -214,7 +225,8 @@ Sem corpo. Chame uma vez para o `petId` do Thor e uma vez para o `petId` da Luna
 Use o `petId` do Thor para a primeira e o `petId` da Luna para a segunda. Anote o `consultaId`
 retornado em cada resposta (201).
 
-### Passo 5 — Alterar (UPDATE) uma consulta (`PUT /api/pets/{petId}/consultas/{consultaId}`)
+### Passo 5 — Alterar (UPDATE) uma consulta
+`PUT https://webapp-amandaba-rm566385.azurewebsites.net/api/pets/{petId}/consultas/{consultaId}`
 Use o `petId` e `consultaId` da consulta do Thor:
 ```json
 {
@@ -236,7 +248,8 @@ Use o `petId` e `consultaId` da consulta do Thor:
 (Alterei o horário, o peso e o diagnóstico para deixar claro no vídeo que é uma edição de um
 registro já existente.)
 
-### Passo 6 — Alterar apenas o status (`PATCH /api/pets/{petId}/consultas/{consultaId}/status`)
+### Passo 6 — Alterar apenas o status
+`PATCH https://webapp-amandaba-rm566385.azurewebsites.net/api/pets/{petId}/consultas/{consultaId}/status`
 Use o `petId` e `consultaId` da consulta da Luna:
 ```json
 {
@@ -245,17 +258,20 @@ Use o `petId` e `consultaId` da consulta da Luna:
 ```
 
 ### Passo 7 — Consultar novamente para evidenciar as alterações
-- `GET /api/pets/{petId}/consultas/{consultaId}` para a consulta do Thor → mostra o novo peso/horário.
-- `GET /api/pets/{petId}/consultas?status=REALIZADA` para a Luna → mostra a consulta filtrada pelo
-  novo status.
+- `GET https://webapp-amandaba-rm566385.azurewebsites.net/api/pets/{petId}/consultas/{consultaId}`
+  para a consulta do Thor → mostra o novo peso/horário.
+- `GET https://webapp-amandaba-rm566385.azurewebsites.net/api/pets/{petId}/consultas?status=REALIZADA`
+  para a Luna → mostra a consulta filtrada pelo novo status.
 
 ### Passo 8 — Excluir (DELETE) um registro
-`DELETE /api/pets/{petId}/consultas/{consultaId}` — use o `petId` e `consultaId` da consulta da Luna
-(a que você acabou de marcar como `REALIZADA`), para fechar o ciclo completo de CRUD sobre a tabela
-de Consultas. Em seguida, chame `GET /api/pets/{petId}/consultas` novamente para mostrar que o
-registro não aparece mais na listagem.
+`DELETE https://webapp-amandaba-rm566385.azurewebsites.net/api/pets/{petId}/consultas/{consultaId}`
+— use o `petId` e `consultaId` da consulta da Luna (a que você acabou de marcar como `REALIZADA`), para
+fechar o ciclo completo de CRUD sobre a tabela de Consultas. Em seguida, chame
+`GET https://webapp-amandaba-rm566385.azurewebsites.net/api/pets/{petId}/consultas` novamente para
+mostrar que o registro não aparece mais na listagem.
 
-### Passo 9 (opcional, se quiser reforçar o relacionamento) — Histórico de peso (`POST /api/pets/{petId}/pesos`)
+### Passo 9 (opcional, se quiser reforçar o relacionamento) — Histórico de peso
+`POST https://webapp-amandaba-rm566385.azurewebsites.net/api/pets/{petId}/pesos`
 Como reforço opcional do relacionamento Pets ↔ outra tabela, dá pra registrar peso para o Thor:
 ```json
 {
@@ -263,14 +279,15 @@ Como reforço opcional do relacionamento Pets ↔ outra tabela, dá pra registra
   "dataMedicao": "2026-09-10T13:00:00.000Z"
 }
 ```
-e depois consultar com `GET /api/pets/{petId}/pesos/atual`.
+e depois consultar com
+`GET https://webapp-amandaba-rm566385.azurewebsites.net/api/pets/{petId}/pesos/atual`.
 
 ---
 
 **Resumo para o vídeo:** os passos 2–8 acima já cobrem, nas duas tabelas relacionadas (Pets e
 Consultas), inserção de 2 registros significativos em cada uma, alteração (`PUT` e `PATCH`),
 exclusão (`DELETE`) e consulta (`GET`) — exatamente o que o item 9.3 do enunciado pede para ser
-demonstrado por SELECT no banco após cada operação no Swagger.
+demonstrado por SELECT no banco após cada operação, seja pelo Swagger, seja pelo Postman.
 
 ## 11. Arquitetura
 
