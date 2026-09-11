@@ -284,11 +284,6 @@ e depois consultar com
 
 ---
 
-**Resumo para o vídeo:** os passos 2–8 acima já cobrem, nas duas tabelas relacionadas (Pets e
-Consultas), inserção de 2 registros significativos em cada uma, alteração (`PUT` e `PATCH`),
-exclusão (`DELETE`) e consulta (`GET`) — exatamente o que o item 9.3 do enunciado pede para ser
-demonstrado por SELECT no banco após cada operação, seja pelo Swagger, seja pelo Postman.
-
 ## 11. Arquitetura
 
 ```text
