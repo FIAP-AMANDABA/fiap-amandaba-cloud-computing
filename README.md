@@ -283,19 +283,15 @@ e depois consultar com
 `GET https://webapp-amandaba-<RM_AZURE>.azurewebsites.net/api/pets/{petId}/pesos/atual`.
 
 ---
+
 ## 11. Arquitetura
 
-```text
-Tutor / Usuário
-      │  HTTPS
-      ▼
-Azure App Service (.NET 8, Linux, F1)
-      │  EF Core / Oracle.EntityFrameworkCore
-      ▼
-Oracle Database (PaaS, FIAP)
+![Arquitetura do Amandaba na Azure](./images/diagram.png)
 
-GitHub Actions ──(Zip Deploy)──▶ Azure App Service
-```
+O tutor acessa a aplicação via HTTPS, que roda em um Azure App Service (.NET 8, Linux, F1) dentro do
+Resource Group da assinatura Azure for Students. O App Service se conecta ao banco Oracle Database
+(PaaS, instância da FIAP), externo à assinatura. O deploy do código é feito pelo GitHub Actions, via
+Zip Deploy, diretamente no App Service.
 
 Nenhum componente é containerizado, em conformidade com os requisitos da opção "Serviço de
 Aplicativo (App Service)".
